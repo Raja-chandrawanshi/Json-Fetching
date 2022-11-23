@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    #parent-containar {
+      padding: 1px;
+      display: grid;
+      background-color: rgb(132, 189, 132);
+      grid-template-columns: auto auto auto;
+      gap: 8px;
+      font-size: 17px;
+      font-family: sans-serif;
+      letter-spacing: 1px;
+    }
+    #card {
+      border: 2px solid;
+      border-radius: 5px;
+      padding: 9px;
+      background-color: rgb(205, 180, 180);
+    }
+    P {
+      text-align: center;
+      padding: 4px 0;
+      font-size: 18px;
+    }
+    p span {
+      margin-left: 6px;
+    }
+    img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      padding-top: 15px;
+      padding-left: 90px;
+      margin-top: 15px;
+    }
+  </style>
+  <body>
+    <div id="parent-containar"></div>
+
+    <script>
+      fetch("https://fakestoreapi.com/products")
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data);
+          const content = document.createDocumentFragment();
+          for (let i = 0; i < data.length; i++) {
+            const title = data[i].title;
+            const price = data[i].price;
+
+            const category = data[i].category;
+            const image = data[i].image;
+
+            const box = document.createElement("div");
+            box.id = "card";
+            box.innerHTML = `
+           
+                <p>Title:<span>${title}</span></p>
+                <p>Price:<span>${price}</span></p>
+                
+                <p>Category:<span>${category}</span></p>
+                
+                <img src="${image}" alt="">
+              `;
+            content.append(box);
+          }
+          const parent = document.getElementById("parent-containar");
+          parent.append(content);
+        });
+    </script>
+  </body>
+</html>
